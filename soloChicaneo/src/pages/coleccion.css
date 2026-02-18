@@ -1,0 +1,286 @@
+@import url("https://fonts.cdnfonts.com/css/ogg");
+
+.collection {
+  margin-top: 1rem;
+  border: 1px solid #b79159;
+  background: #efdfc2;
+}
+
+.collection-top {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid #b79159;
+  background: linear-gradient(180deg, #e3cda7 0%, #d7bb8f 100%);
+  color: #332211;
+}
+
+.collection-top p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #755026;
+}
+
+.collection-top h2 {
+  margin: 0.25rem 0 0;
+  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
+  font-size: 1.7rem;
+}
+
+.collection-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr) 290px;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.collection-filters,
+.collection-detail {
+  border: 1px solid #c09a65;
+  background: #f5e7cd;
+  padding: 1rem;
+  align-self: start;
+}
+
+.collection-filters h3 {
+  margin-top: 0;
+  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
+}
+
+.collection-filters label {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  color: #533818;
+}
+
+.collection-filters input,
+.collection-filters select {
+  width: 100%;
+  margin-top: 0.25rem;
+  border: 1px solid #b78e58;
+  padding: 0.48rem;
+  background: #fcf6ea;
+  color: #322112;
+}
+
+.collection-main {
+  border: 1px solid #c09a65;
+  background: #f5e7cd;
+  padding: 1rem;
+}
+
+.collection-tabs {
+  display: inline-flex;
+  border: 1px solid #b18242;
+}
+
+.collection-tabs button {
+  border: none;
+  border-right: 1px solid #b18242;
+  border-radius: 0;
+  background: #ecd8b2;
+  color: #41290f;
+  padding: 0.52rem 0.8rem;
+}
+
+.collection-tabs button:last-child {
+  border-right: none;
+}
+
+.collection-tabs button.is-active {
+  background: #8a5d2e;
+  color: #f5e9d1;
+}
+
+.collection-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+}
+
+.collection-card {
+  text-align: left;
+  border: 1px solid #bc935e;
+  border-radius: 0;
+  background: #f9efdc;
+  padding: 0.7rem;
+  color: #3b2612;
+  perspective: 900px;
+  overflow: hidden;
+}
+
+.collection-card.is-selected {
+  box-shadow: inset 0 0 0 2px #81562a;
+}
+
+.collection-card__flip {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 110px;
+  margin-bottom: 0.6rem;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+.collection-card:hover .collection-card__flip,
+.collection-card.is-selected .collection-card__flip {
+  transform: rotateY(180deg) scale(1.04);
+}
+
+.collection-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #bc935e;
+  object-fit: cover;
+  backface-visibility: hidden;
+  filter: sepia(0.14);
+}
+
+.collection-card__img--back {
+  transform: rotateY(180deg);
+}
+
+.collection-card strong,
+.collection-card small {
+  display: block;
+}
+
+.collection-card small {
+  margin-top: 0.3rem;
+}
+
+.collection-detail__slider {
+  display: grid;
+  grid-template-columns: 38px 1fr 38px;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #af8044;
+}
+
+.collection-detail__arrow {
+  border: none;
+  height: 100%;
+  background: #d1ac75;
+  color: #4f3419;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.collection-detail__arrow:hover {
+  background: #c59b60;
+}
+
+.collection-detail__track {
+  width: 100%;
+  overflow: hidden;
+}
+
+.collection-detail__img {
+  display: block;
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  filter: sepia(0.14);
+  cursor: zoom-in;
+}
+
+.collection-detail__track:hover .collection-detail__img {
+  transform: scale(1.08);
+}
+
+.collection-detail__counter {
+  margin: 0.45rem 0 0;
+  color: #7a5730;
+  font-size: 0.85rem;
+}
+
+.collection-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(22, 13, 6, 0.72);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.collection-modal__box {
+  width: min(980px, 95vw);
+  border: 1px solid #c89c5c;
+  background: #f1dfbf;
+}
+
+.collection-modal__tools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  padding: 0.55rem;
+  border-bottom: 1px solid #c89c5c;
+}
+
+.collection-modal__tools button {
+  border: 1px solid #7a5227;
+  background: #e6c58f;
+  color: #422a11;
+  cursor: pointer;
+  min-width: 35px;
+}
+
+.collection-modal__viewport {
+  overflow: auto;
+  max-height: 78vh;
+  background: #25180d;
+}
+
+.collection-modal__viewport img {
+  width: 100%;
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+}
+
+.collection-detail__year {
+  margin-bottom: 0;
+  color: #684725;
+}
+
+.collection-detail h3 {
+  margin-top: 0.2rem;
+  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
+}
+
+.collection-detail button {
+  margin-top: 0.8rem;
+  border: 1px solid #5c3a18;
+  background: linear-gradient(180deg, #6d4d29, #4f3419);
+  color: #f6e6c7;
+}
+
+.collection-detail button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.collection-empty {
+  padding: 1rem 0;
+  color: #5e4020;
+}
+
+@media (max-width: 1080px) {
+  .collection-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+  }
+}
