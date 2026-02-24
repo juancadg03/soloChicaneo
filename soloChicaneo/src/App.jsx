@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
 import Coleccion from "./pages/coleccion";
+import Admin from "./pages/admin";
 import "./App.css";
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
         >
           Sobre mi
         </NavLink>
+    
         <form className="nav-main__search" onSubmit={handleCatalogSearch}>
           <input
             type="text"
@@ -79,6 +81,7 @@ function App() {
               </section>
             }
           />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </div>

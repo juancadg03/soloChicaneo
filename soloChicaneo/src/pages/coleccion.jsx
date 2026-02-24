@@ -152,19 +152,19 @@ function Coleccion({ searchQuery = "", preset }) {
   return (
     <section className="collection">
       <header className="collection-top">
-        <p>Inicio / Coleccion</p>
-        <h2>Catalogo de numismatica</h2>
+        <p>Inicio / Colección</p>
+        <h2>Catalogo de numismática</h2>
       </header>
 
       <div className="collection-layout">
         <aside className="collection-filters">
           <h3>Filtrar por</h3>
 
-          <label htmlFor="search">Busqueda</label>
+          <label htmlFor="search">Búsqueda</label>
           <input
             id="search"
             type="text"
-            placeholder="Nombre o descripcion"
+            placeholder="Nombre o descripción"
             value={busqueda}
             onChange={(event) => setBusqueda(event.target.value)}
           />
@@ -195,7 +195,7 @@ function Coleccion({ searchQuery = "", preset }) {
             ))}
           </select>
 
-          <label htmlFor="pais">Pais</label>
+          <label htmlFor="pais">País</label>
           <select
             id="pais"
             value={filtroPais}
@@ -228,7 +228,7 @@ function Coleccion({ searchQuery = "", preset }) {
               className={filtroIntercambio === "true" ? "" : "is-active"}
               onClick={() => setFiltroIntercambio("todos")}
             >
-              Catalogo
+              Catálogo
             </button>
             <button
               type="button"
@@ -243,7 +243,7 @@ function Coleccion({ searchQuery = "", preset }) {
           {!cargando && error && <p className="collection-empty">{error}</p>}
           {!cargando && !error && !resultados.length ? (
             <p className="collection-empty">
-              No se encontraron articulos con los filtros seleccionados.
+              No se encontraron artículos con los filtros seleccionados.
             </p>
           ) : null}
 
@@ -313,7 +313,7 @@ function Coleccion({ searchQuery = "", preset }) {
               <p className="collection-detail__year">{seleccionado.anio}</p>
               <h3>{seleccionado.nombre}</h3>
               <p>
-                <strong>Pais:</strong> {seleccionado.pais}
+                <strong>País:</strong> {seleccionado.pais}
               </p>
               <p>
                 <strong>Tipo:</strong> {seleccionado.tipo}
@@ -329,7 +329,7 @@ function Coleccion({ searchQuery = "", preset }) {
             </>
           ) : (
             <p className="collection-empty">
-              Selecciona un articulo para ver su descripcion.
+              Selecciona un articulo para ver su descripción.
             </p>
           )}
         </aside>

@@ -9,7 +9,7 @@ function Inicio({ onNavigateCollection }) {
         </div>
         <article className="home-hero__copy">
           <p className="home-kicker">Catalogo personal</p>
-          <h1>Mi coleccion numismatica</h1>
+          <h1>Mi colección numismática</h1>
           <p>
             Explora monedas y billetes clasificados por año, país y
             disponibilidad de intercambio. Un espacio para registrar piezas con
@@ -52,7 +52,7 @@ function Inicio({ onNavigateCollection }) {
               alt="Intercambiables"
             />
             <h3>Intercambiables</h3>
-            <p>Articulos disponibles para trueque.</p>
+            <p>Artículos disponibles para trueque.</p>
           </button>
         </div>
       </section>
@@ -70,7 +70,7 @@ function Inicio({ onNavigateCollection }) {
           >
             <img className="home-discover__thumb" src="/billetes.jpg" alt="Billetes" />
             <h3>Billetes</h3>
-            <p>Series por decada, banco emisor y estado de conservacion.</p>
+            <p>Series por decada, banco emisor y estado de conservación.</p>
           </button>
           <button
             type="button"
@@ -82,7 +82,7 @@ function Inicio({ onNavigateCollection }) {
           >
             <img className="home-discover__thumb" src="/monedas.webp" alt="Monedas" />
             <h3>Monedas</h3>
-            <p>Piezas conmemorativas y de circulacion de distintas epocas.</p>
+            <p>Piezas conmemorativas y de circulación de distintas epocas.</p>
           </button>
           <button
             type="button"

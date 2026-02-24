@@ -1,8 +1,9 @@
-@import url("https://fonts.cdnfonts.com/css/ogg");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;700&display=swap");
 
 .home {
   background: linear-gradient(180deg, #efe2c8 0%, #e5d4b6 100%);
   border: 1px solid #c8ab77;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .home-hero {
@@ -40,12 +41,14 @@
 
 .home-hero h1 {
   margin: 0.3rem 0 1rem;
-  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
-  font-size: clamp(2rem, 3.2vw, 3.1rem);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.4rem, 4.2vw, 4rem);
+  letter-spacing: 0.03em;
 }
 
 .home-hero p {
   max-width: 44ch;
+  font-size: 1.18rem;
 }
 
 .home-hero button {
@@ -65,7 +68,9 @@
 .home-discover h2 {
   margin: 0 0 1rem;
   text-align: center;
-  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  letter-spacing: 0.04em;
   color: #382715;
 }
 
@@ -82,10 +87,24 @@
   text-align: center;
   color: #2b2014;
   cursor: pointer;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .home-category-card:hover {
   background: #e6d2ad;
+}
+
+.home-category-card h3,
+.home-discover__grid h3 {
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 0.03em;
+  font-size: 1.8rem;
+  margin: 0.55rem 0 0.2rem;
+}
+
+.home-category-card p,
+.home-discover__grid p {
+  font-size: 1.08rem;
 }
 
 .home-category-card__img {
@@ -116,6 +135,7 @@
   color: #2b2014;
   cursor: pointer;
   border-radius: 0;
+  font-family: "Cormorant Garamond", serif;
 }
 
 .home-discover__grid button:hover {
