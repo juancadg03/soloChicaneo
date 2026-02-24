@@ -1,0 +1,140 @@
+.requests {
+  border: 1px solid #b79159;
+  background: #f1e3c8;
+}
+
+.requests-head {
+  padding: 1rem 1.3rem;
+  border-bottom: 1px solid #b79159;
+  background: linear-gradient(180deg, #e6d1ab 0%, #d7bb8f 100%);
+}
+
+.requests-head p {
+  margin: 0;
+  color: #6f4d2b;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-size: 0.74rem;
+}
+
+.requests-head h2 {
+  margin: 0.2rem 0 0;
+  color: #291b10;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.requests-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  padding: 1rem;
+}
+
+.requests-stats article {
+  border: 1px solid #bc935e;
+  background: #faefda;
+  padding: 0.75rem;
+}
+
+.requests-stats p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #654224;
+  text-transform: uppercase;
+}
+
+.requests-stats strong {
+  font-size: 1.6rem;
+  color: #2f1e0f;
+}
+
+.requests-empty {
+  margin: 0 1rem 1rem;
+  border: 1px solid #c4a06b;
+  background: #f9f0df;
+  padding: 1rem;
+  color: #5b3f23;
+}
+
+.requests-grid {
+  display: grid;
+  gap: 0.85rem;
+  padding: 0 1rem 1rem;
+}
+
+.request-card {
+  border: 1px solid #ba9160;
+  background: #fcf4e4;
+  padding: 0.85rem;
+}
+
+.request-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.65rem;
+  border-bottom: 1px dashed #b58b58;
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.55rem;
+}
+
+.request-card__head small {
+  color: #674729;
+}
+
+.request-status {
+  margin: 0;
+  border: 1px solid;
+  padding: 0.18rem 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+}
+
+.request-status.pending {
+  border-color: #9b3b2f;
+  color: #842517;
+  background: #fde8de;
+}
+
+.request-status.done {
+  border-color: #5d7d3f;
+  color: #2f5314;
+  background: #e9f2e0;
+}
+
+.request-card__block h3 {
+  margin: 0.1rem 0 0.25rem;
+  color: #2a1a0e;
+}
+
+.request-card__block p {
+  margin: 0.18rem 0;
+  color: #3f2914;
+}
+
+.request-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+}
+
+.request-card__actions button {
+  border: 1px solid #7d5328;
+  background: #d9b780;
+  color: #3c2914;
+  padding: 0.42rem 0.65rem;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .requests-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .request-card__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

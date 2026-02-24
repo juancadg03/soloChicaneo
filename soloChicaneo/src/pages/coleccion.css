@@ -27,7 +27,7 @@
 
 .collection-layout {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) 290px;
+  grid-template-columns: 240px minmax(0, 1fr) 320px;
   gap: 1rem;
   padding: 1rem;
 }
@@ -264,6 +264,64 @@
   cursor: not-allowed;
 }
 
+.collection-request {
+  margin-top: 0.9rem;
+  border: 1px solid #be9358;
+  padding: 0.75rem;
+  background: #f9f0df;
+}
+
+.collection-request h4 {
+  margin: 0 0 0.45rem;
+  font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
+}
+
+.collection-request label {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+  color: #533818;
+}
+
+.collection-request input,
+.collection-request textarea {
+  width: 100%;
+  margin-top: 0.22rem;
+  border: 1px solid #b78e58;
+  background: #fff9eb;
+  color: #2e1d10;
+  padding: 0.44rem;
+}
+
+.collection-request__actions {
+  display: flex;
+  gap: 0.55rem;
+}
+
+.collection-request__actions button {
+  margin-top: 0.7rem;
+}
+
+.collection-request__success,
+.collection-request__error {
+  margin: 0.5rem 0 0;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid;
+  font-size: 0.88rem;
+}
+
+.collection-request__success {
+  border-color: #6f8b53;
+  color: #33521e;
+  background: #edf6e4;
+}
+
+.collection-request__error {
+  border-color: #a04836;
+  color: #7e2412;
+  background: #fae7df;
+}
+
 .collection-empty {
   padding: 1rem 0;
   color: #5e4020;
@@ -282,5 +340,9 @@
 @media (max-width: 620px) {
   .collection-grid {
     grid-template-columns: 1fr;
+  }
+
+  .collection-request__actions {
+    flex-direction: column;
   }
 }

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { addSolicitud } from "../utils/solicitudesStorage";
 import "./coleccion.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
@@ -14,6 +15,7 @@ const COUNTRY_IMAGE_PAIRS = {
 
 const resolveImageSrc = (item) =>
   item?.imagenLocal?.trim() || item?.imagenUrl?.trim() || DEFAULT_IMAGE;
+
 const resolveFaces = (item) => {
   const local = resolveImageSrc(item);
   const pair = COUNTRY_IMAGE_PAIRS[item?.pais];
@@ -21,6 +23,12 @@ const resolveFaces = (item) => {
     return { front: local, back: local };
   }
   return { front: pair[0], back: pair[1] };
+};
+
+const initialRequester = {
+  nombre: "",
+  correo: "",
+  mensaje: "",
 };
 
 function Coleccion({ searchQuery = "", preset }) {
@@ -37,6 +45,10 @@ function Coleccion({ searchQuery = "", preset }) {
   const [detalleIndex, setDetalleIndex] = useState(0);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [requester, setRequester] = useState(initialRequester);
+  const [requestError, setRequestError] = useState("");
+  const [requestSuccess, setRequestSuccess] = useState("");
 
   useEffect(() => {
     setBusqueda(searchQuery);
@@ -137,6 +149,10 @@ function Coleccion({ searchQuery = "", preset }) {
     setDetalleIndex(0);
     setIsZoomOpen(false);
     setZoomLevel(1);
+    setShowRequestForm(false);
+    setRequester(initialRequester);
+    setRequestError("");
+    setRequestSuccess("");
   }, [seleccionadoId]);
 
   const moveSlide = (direction) => {
@@ -149,22 +165,62 @@ function Coleccion({ searchQuery = "", preset }) {
   const zoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 3));
   const zoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.25, 1));
 
+  const handleSubmitRequest = (event) => {
+    event.preventDefault();
+
+    if (!seleccionado || !seleccionado.intercambiable) {
+      setRequestError("Este articulo no esta disponible para intercambio.");
+      return;
+    }
+
+    const nombre = requester.nombre.trim();
+    const correo = requester.correo.trim();
+    const mensaje = requester.mensaje.trim();
+
+    if (!nombre || !correo) {
+      setRequestError("Ingresa tu nombre y correo.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(correo)) {
+      setRequestError("Ingresa un correo valido.");
+      return;
+    }
+
+    addSolicitud({
+      articuloId: seleccionado._id,
+      articuloNombre: seleccionado.nombre,
+      articuloTipo: seleccionado.tipo,
+      articuloPais: seleccionado.pais,
+      articuloAnio: seleccionado.anio,
+      solicitanteNombre: nombre,
+      solicitanteCorreo: correo,
+      mensaje,
+    });
+
+    setRequestError("");
+    setRequestSuccess("Solicitud enviada. El administrador la vera en su dashboard.");
+    setRequester(initialRequester);
+    setShowRequestForm(false);
+  };
+
   return (
     <section className="collection">
       <header className="collection-top">
-        <p>Inicio / Colección</p>
-        <h2>Catalogo de numismática</h2>
+        <p>Inicio / Coleccion</p>
+        <h2>Catalogo de numismatica</h2>
       </header>
 
       <div className="collection-layout">
         <aside className="collection-filters">
           <h3>Filtrar por</h3>
 
-          <label htmlFor="search">Búsqueda</label>
+          <label htmlFor="search">Busqueda</label>
           <input
             id="search"
             type="text"
-            placeholder="Nombre o descripción"
+            placeholder="Nombre o descripcion"
             value={busqueda}
             onChange={(event) => setBusqueda(event.target.value)}
           />
@@ -181,7 +237,7 @@ function Coleccion({ searchQuery = "", preset }) {
             <option value="exclusivo">Exclusivo</option>
           </select>
 
-          <label htmlFor="anio">Año</label>
+          <label htmlFor="anio">Ano</label>
           <select
             id="anio"
             value={filtroAnio}
@@ -195,7 +251,7 @@ function Coleccion({ searchQuery = "", preset }) {
             ))}
           </select>
 
-          <label htmlFor="pais">País</label>
+          <label htmlFor="pais">Pais</label>
           <select
             id="pais"
             value={filtroPais}
@@ -228,7 +284,7 @@ function Coleccion({ searchQuery = "", preset }) {
               className={filtroIntercambio === "true" ? "" : "is-active"}
               onClick={() => setFiltroIntercambio("todos")}
             >
-              Catálogo
+              Catalogo
             </button>
             <button
               type="button"
@@ -243,7 +299,7 @@ function Coleccion({ searchQuery = "", preset }) {
           {!cargando && error && <p className="collection-empty">{error}</p>}
           {!cargando && !error && !resultados.length ? (
             <p className="collection-empty">
-              No se encontraron artículos con los filtros seleccionados.
+              No se encontraron articulos con los filtros seleccionados.
             </p>
           ) : null}
 
@@ -313,24 +369,78 @@ function Coleccion({ searchQuery = "", preset }) {
               <p className="collection-detail__year">{seleccionado.anio}</p>
               <h3>{seleccionado.nombre}</h3>
               <p>
-                <strong>País:</strong> {seleccionado.pais}
+                <strong>Pais:</strong> {seleccionado.pais}
               </p>
               <p>
                 <strong>Tipo:</strong> {seleccionado.tipo}
               </p>
               <p>
-                <strong>Intercambiable:</strong>{" "}
-                {seleccionado.intercambiable ? "Si" : "No"}
+                <strong>Intercambiable:</strong> {seleccionado.intercambiable ? "Si" : "No"}
               </p>
               <p>{seleccionado.descripcion}</p>
-              <button type="button" disabled={!seleccionado.intercambiable}>
+
+              {requestSuccess ? <p className="collection-request__success">{requestSuccess}</p> : null}
+              {requestError ? <p className="collection-request__error">{requestError}</p> : null}
+
+              <button
+                type="button"
+                disabled={!seleccionado.intercambiable}
+                onClick={() => {
+                  setShowRequestForm((prev) => !prev);
+                  setRequestError("");
+                  setRequestSuccess("");
+                }}
+              >
                 Solicitar intercambio
               </button>
+
+              {showRequestForm && seleccionado.intercambiable ? (
+                <form className="collection-request" onSubmit={handleSubmitRequest}>
+                  <h4>Datos del solicitante</h4>
+                  <label htmlFor="solicitante-nombre">Nombre</label>
+                  <input
+                    id="solicitante-nombre"
+                    type="text"
+                    value={requester.nombre}
+                    onChange={(event) =>
+                      setRequester((prev) => ({ ...prev, nombre: event.target.value }))
+                    }
+                    placeholder="Tu nombre completo"
+                  />
+
+                  <label htmlFor="solicitante-correo">Correo</label>
+                  <input
+                    id="solicitante-correo"
+                    type="email"
+                    value={requester.correo}
+                    onChange={(event) =>
+                      setRequester((prev) => ({ ...prev, correo: event.target.value }))
+                    }
+                    placeholder="tu@correo.com"
+                  />
+
+                  <label htmlFor="solicitante-mensaje">Mensaje (opcional)</label>
+                  <textarea
+                    id="solicitante-mensaje"
+                    rows="3"
+                    value={requester.mensaje}
+                    onChange={(event) =>
+                      setRequester((prev) => ({ ...prev, mensaje: event.target.value }))
+                    }
+                    placeholder="Detalles de tu propuesta"
+                  />
+
+                  <div className="collection-request__actions">
+                    <button type="submit">Enviar solicitud</button>
+                    <button type="button" onClick={() => setShowRequestForm(false)}>
+                      Cancelar
+                    </button>
+                  </div>
+                </form>
+              ) : null}
             </>
           ) : (
-            <p className="collection-empty">
-              Selecciona un articulo para ver su descripción.
-            </p>
+            <p className="collection-empty">Selecciona un articulo para ver su descripcion.</p>
           )}
         </aside>
       </div>
