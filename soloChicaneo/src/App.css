@@ -1,19 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;700&family=Special+Elite&display=swap");
 
 :root {
-  --paper-light: rgba(242, 229, 202, 0.94);
-  --paper-mid: rgba(227, 208, 176, 0.9);
-  --ink-strong: #21160d;
+  --paper-light: rgba(231, 211, 169, 0.94);
+  --paper-mid: rgba(86, 61, 40, 0.9);
+  --ink-strong: #cd9f78;
   --ink-soft: #4b3118;
   --line: #7d5730;
-  --accent: #9c2f2f;
+  --accent: #e7d4d4;
 }
 
 .app-shell {
   min-height: 100vh;
   color: var(--ink-strong);
   background:
-    linear-gradient(rgba(28, 17, 9, 0.5), rgba(28, 17, 9, 0.5)),
+    linear-gradient(rgba(55, 46, 39, 0.5), rgba(63, 38, 19, 0.5)),
     url("/descarga%20%285%29.jpeg") center / cover fixed no-repeat;
 }
 
@@ -41,26 +41,31 @@
   gap: 0.75rem;
   align-items: center;
   padding: 0.75rem 1rem;
-  background: var(--paper-light);
+
+  background: linear-gradient(
+    90deg,
+    #714c2e,
+    #8d6947,
+    #baa992
+  );
+
   border-bottom: 2px solid var(--line);
   border-top: 1px solid var(--line);
-  box-shadow: 0 8px 24px rgba(13, 8, 3, 0.25);
+  box-shadow: 0 8px 24px rgba(84, 84, 84, 0.35);
 }
 
 .nav-main__logo {
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--line);
-  background: #f3e8d2;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
+  border-radius: 50%;
 }
 
 .nav-main__logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1.3); 
 }
 
 .nav-main a {
@@ -79,11 +84,11 @@
 
 .nav-main a.is-active {
   border-bottom-color: var(--accent);
-  color: #682019;
+  color: #f5f1f1;
 }
 
 .nav-main a:hover {
-  color: #5a261a;
+  color: #c6c6c6;
 }
 
 .nav-main__search {
@@ -104,7 +109,7 @@
 
 .nav-main__search button {
   border: 1px solid #6d4923;
-  background: linear-gradient(180deg, #d8b278, #c0965c);
+  background: linear-gradient(180deg, #d8b37b, #95774f);
   color: #2e1c0f;
   padding: 0.45rem 0.65rem;
   cursor: pointer;
@@ -117,14 +122,14 @@
   max-width: 1200px;
   margin: 1rem auto;
   padding: 1rem;
-  background: rgba(241, 228, 200, 0.9);
-  border: 1px solid rgba(105, 74, 42, 0.75);
+  background: #c7af99e6;
+  border: 1px solid rgba(117, 114, 111, 0.75);
   box-shadow: 0 14px 36px rgba(12, 7, 3, 0.22);
 }
 
 .about {
   border: 1px solid #9f7548;
-  background: rgba(246, 236, 216, 0.95);
+  background: rgba(76, 55, 12, 0.95);
   padding: 1.6rem;
   color: var(--ink-strong);
 }

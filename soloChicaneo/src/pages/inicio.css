@@ -9,7 +9,7 @@
 .home-hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: linear-gradient(180deg, #e7d7b8 0%, #dcc6a0 100%);
+  background: linear-gradient(180deg, #4f38276b 0%, #b3a080 100%);
   border-bottom: 1px solid #c8ab77;
 }
 
@@ -36,7 +36,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   font-size: 0.75rem;
-  color: #7f5d36;
+  color: #1c1105;
 }
 
 .home-hero h1 {
@@ -71,7 +71,7 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: clamp(1.7rem, 3.5vw, 2.5rem);
   letter-spacing: 0.04em;
-  color: #382715;
+  color:  #513d28;
 }
 
 .home-categories__grid {
@@ -83,15 +83,15 @@
 .home-category-card {
   padding: 1rem;
   border: 1px solid #b9965f;
-  background: #ecdcbc;
+  background: #503817;
   text-align: center;
-  color: #2b2014;
+  color: #dbbb99;
   cursor: pointer;
   font-family: "Cormorant Garamond", serif;
 }
 
 .home-category-card:hover {
-  background: #e6d2ad;
+  background: #68411ebe;
 }
 
 .home-category-card h3,
@@ -111,26 +111,26 @@
   display: block;
   width: 100%;
   height: 130px;
-  border: 1px solid #b9965f;
+  border: 1px solid #634c2c;
   object-fit: cover;
   filter: sepia(0.18);
 }
 
 .home-discover {
   padding: 2rem;
-  background: rgba(222, 198, 155, 0.42);
+  background: #6246316b;
 }
 
 .home-discover__grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.5rem;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
 }
 
 .home-discover__grid button {
-  border: 1px solid #b9965f;
-  padding: 1rem;
-  background: #f0e1c4;
+  border: 3px solid #50412a;
+  padding: 2rem;
+  background: #654e3788;
   text-align: center;
   color: #2b2014;
   cursor: pointer;
@@ -138,8 +138,10 @@
   font-family: "Cormorant Garamond", serif;
 }
 
+
+
 .home-discover__grid button:hover {
-  background: #e6d2ad;
+  background: #e6d2ad5a;
 }
 
 .home-discover__thumb {
