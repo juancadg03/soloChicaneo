@@ -29,7 +29,7 @@ function Admin() {
     <section className="admin">
       <header className="admin-header">
         <p>Panel</p>
-        <h2>Administracion de coleccion</h2>
+        <h2>Administración de colección</h2>
       </header>
 
       {!isLoggedIn ? (
@@ -47,7 +47,7 @@ function Admin() {
             placeholder="admin"
           />
 
-          <label htmlFor="admin-pass">Contrasena</label>
+          <label htmlFor="admin-pass">Contraseña</label>
           <input
             id="admin-pass"
             type="password"
@@ -65,13 +65,13 @@ function Admin() {
         <section className="admin-card">
           <h3>Opciones de administrador</h3>
           <button type="button" onClick={() => navigate("/admin/articulos")}>
-            Gestionar articulos
+            Gestionar artículos
           </button>
           <button type="button" onClick={() => navigate("/admin/intercambios")}>
             Ver solicitudes de intercambio
           </button>
           <button type="button" onClick={() => setIsLoggedIn(false)}>
-            Cerrar sesion
+            Cerrar sesión
           </button>
         </section>
       )}

@@ -234,7 +234,7 @@ function Coleccion({ searchQuery = "", preset }) {
             <option value="todos">Todas</option>
             <option value="moneda">Moneda</option>
             <option value="billete">Billete</option>
-            <option value="exclusivo">Exclusivo</option>
+            <option value="exclusivo">Mejor Valorados</option>
           </select>
 
           <label htmlFor="anio">Ano</label>
@@ -440,7 +440,9 @@ function Coleccion({ searchQuery = "", preset }) {
               ) : null}
             </>
           ) : (
-            <p className="collection-empty">Selecciona un articulo para ver su descripcion.</p>
+            <p className="collection-empty">
+              Selecciona un artículo para ver su descripción.
+            </p>
           )}
         </aside>
       </div>
