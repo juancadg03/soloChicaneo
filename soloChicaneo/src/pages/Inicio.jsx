@@ -5,10 +5,10 @@ function Inicio({ onNavigateCollection }) {
     <main className="home">
       <section className="home-hero">
         <div className="home-hero__media" aria-hidden="true">
-          <img src="/numismatica.jpg" alt="Coleccion numismatica" />
+          <img src="/numismatica.jpg" alt="Colección numismática" />
         </div>
         <article className="home-hero__copy">
-          <p className="home-kicker">Catalogo personal</p>
+          <p className="home-kicker">Catálogo personal</p>
           <h1>Mi colección numismática</h1>
           <p>
             Explora monedas y billetes clasificados por año, país y
@@ -16,13 +16,13 @@ function Inicio({ onNavigateCollection }) {
             historia y compartirlas con otros coleccionistas.
           </p>
           <button type="button" onClick={() => onNavigateCollection()}>
-            Ver la coleccion
+            Ver la colección
           </button>
         </article>
       </section>
 
       <section className="home-categories">
-        <h2>Elige una seccion</h2>
+        <h2>Elige una sección</h2>
         <div className="home-categories__grid">
           <button
             type="button"
@@ -70,7 +70,7 @@ function Inicio({ onNavigateCollection }) {
           >
             <img className="home-discover__thumb" src="/billetes.jpg" alt="Billetes" />
             <h3>Billetes</h3>
-            <p>Series por decada, banco emisor y estado de conservación.</p>
+            <p>Series por década, banco emisor y estado de conservación.</p>
           </button>
           <button
             type="button"
@@ -82,7 +82,7 @@ function Inicio({ onNavigateCollection }) {
           >
             <img className="home-discover__thumb" src="/monedas.webp" alt="Monedas" />
             <h3>Monedas</h3>
-            <p>Piezas conmemorativas y de circulación de distintas epocas.</p>
+            <p>Piezas conmemorativas y de circulación de distintas épocas.</p>
           </button>
           <button
             type="button"
@@ -93,8 +93,8 @@ function Inicio({ onNavigateCollection }) {
             }
           >
             <img className="home-discover__thumb" src="/exclusivos.jpg" alt="Exclusivos" />
-            <h3>Mejor Valorados</h3>
-            <p>Rarezas con baja tirada y alto valor historico.</p>
+            <h3>Mejor valorados</h3>
+            <p>Rarezas con baja tirada y alto valor histórico.</p>
           </button>
         </div>
       </section>
