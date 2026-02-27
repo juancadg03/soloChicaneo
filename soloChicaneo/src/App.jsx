@@ -3,6 +3,7 @@ import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-d
 import Inicio from "./pages/Inicio";
 import Coleccion from "./pages/coleccion";
 import Admin from "./pages/admin";
+import Solicitudes from "./pages/solicitudes";
 import "./App.css";
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
         >
           Sobre mi
         </NavLink>
-    
+
         <form className="nav-main__search" onSubmit={handleCatalogSearch}>
           <input
             type="text"
@@ -82,6 +83,16 @@ function App() {
             }
           />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/intercambios" element={<Solicitudes />} />
+          <Route
+            path="/admin/articulos"
+            element={
+              <section className="about">
+                <h2>Gestion de articulos</h2>
+                <p>Esta pagina se implementara en una siguiente fase.</p>
+              </section>
+            }
+          />
         </Routes>
       </div>
     </div>
