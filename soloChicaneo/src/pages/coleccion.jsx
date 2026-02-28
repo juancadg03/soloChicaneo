@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { addSolicitud } from "../utils/solicitudesStorage";
 import "./coleccion.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
@@ -28,6 +27,7 @@ const resolveFaces = (item) => {
 const initialRequester = {
   nombre: "",
   correo: "",
+  telefono: "",
   mensaje: "",
 };
 
@@ -169,46 +169,60 @@ function Coleccion({ searchQuery = "", preset }) {
     event.preventDefault();
 
     if (!seleccionado || !seleccionado.intercambiable) {
-      setRequestError("Este artículo no está disponible para intercambio.");
+      setRequestError("Este articulo no esta disponible para intercambio.");
       return;
     }
 
     const nombre = requester.nombre.trim();
     const correo = requester.correo.trim();
+    const telefono = requester.telefono.trim();
     const mensaje = requester.mensaje.trim();
 
-    if (!nombre || !correo) {
-      setRequestError("Ingresa tu nombre y correo.");
+    if (!nombre || !correo || !telefono || !mensaje) {
+      setRequestError("Ingresa tu nombre, correo, telefono y mensaje.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(correo)) {
+      setRequestError("Ingresa un correo valido.");
       return;
     }
 
     if (!foto) {
-      setRequestError("Debes adjuntar una foto de tu artículo.");
+      setRequestError("Debes adjuntar una foto de tu articulo.");
       return;
     }
 
     try {
       const formData = new FormData();
-
       formData.append("articuloId", seleccionado._id);
-      formData.append("nombre", nombre);
-      formData.append("correo", correo);
+      formData.append("articuloNombre", seleccionado.nombre);
+      formData.append("articuloTipo", seleccionado.tipo);
+      formData.append("articuloPais", seleccionado.pais);
+      formData.append("articuloAnio", seleccionado.anio);
+      formData.append("solicitanteNombre", nombre);
+      formData.append("solicitanteCorreo", correo);
+      formData.append("solicitanteTelefono", telefono);
       formData.append("mensaje", mensaje);
       formData.append("foto", foto);
 
-      await fetch(`${API_BASE}/solicitudes`, {
+      const response = await fetch(`${API_BASE}/solicitudes`, {
         method: "POST",
         body: formData,
       });
 
-      setRequestSuccess(
-        "Solicitud enviada. Espere la respuesta del administrador en su correo electrónico."
-      );
+      if (!response.ok) {
+        throw new Error("No se pudo registrar la solicitud");
+      }
+
+      setRequestError("");
+      setRequestSuccess("Solicitud enviada. El administrador la vera en su dashboard.");
       setRequester(initialRequester);
       setFoto(null);
       setShowRequestForm(false);
     } catch {
-      setRequestError("Error enviando la solicitud.");
+      setRequestError("No se pudo enviar la solicitud. Intenta nuevamente.");
     }
   }; 
 
@@ -223,11 +237,12 @@ function Coleccion({ searchQuery = "", preset }) {
         <aside className="collection-filters">
           <h3>Filtrar por</h3>
 
-          <label htmlFor="search">Búsqueda</label>
+          <label htmlFor="search">Busqueda</label>
           <input
+            className="mi-input-busqueda"
             id="search"
             type="text"
-            placeholder="Nombre o descripcion"
+            placeholder ="Nombre o descripcion"
             value={busqueda}
             onChange={(event) => setBusqueda(event.target.value)}
           />
@@ -359,9 +374,7 @@ function Coleccion({ searchQuery = "", preset }) {
                     className="collection-detail__img"
                     src={detailImages[detalleIndex]}
                     alt={`${seleccionado.nombre} ${detalleIndex === 0 ? "frontal" : "trasera"}`}
-                    onClick={() => setIsZoomOpen(true)}
-                  />
-                </div>
+                    onClick={() => setIsZoomOpen(true)}/> </div>
                 <button
                   type="button"
                   className="collection-detail__arrow"
@@ -413,6 +426,7 @@ function Coleccion({ searchQuery = "", preset }) {
                       setRequester((prev) => ({ ...prev, nombre: event.target.value }))
                     }
                     placeholder="Tu nombre completo"
+                    required
                   />
 
                   <label htmlFor="solicitante-correo">Correo</label>
@@ -424,9 +438,22 @@ function Coleccion({ searchQuery = "", preset }) {
                       setRequester((prev) => ({ ...prev, correo: event.target.value }))
                     }
                     placeholder="tu@correo.com"
+                    required
                   />
 
-                  <label htmlFor="solicitante-foto">Foto de tu artículo</label>
+                  <label htmlFor="solicitante-telefono">Telefono</label>
+                  <input
+                    id="solicitante-telefono"
+                    type="tel"
+                    value={requester.telefono}
+                    onChange={(event) =>
+                      setRequester((prev) => ({ ...prev, telefono: event.target.value }))
+                    }
+                    placeholder="3001234567"
+                    required
+                  />
+
+                  <label htmlFor="solicitante-foto">Foto de tu articulo</label>
                   <input
                     id="solicitante-foto"
                     type="file"
@@ -435,7 +462,7 @@ function Coleccion({ searchQuery = "", preset }) {
                     onChange={(e) => setFoto(e.target.files[0])}
                   />
 
-                  <label htmlFor="solicitante-mensaje">Descripción de su artículo</label>
+                  <label htmlFor="solicitante-mensaje">Descripcion de su articulo</label>
                   <textarea
                     id="solicitante-mensaje"
                     rows="3"
@@ -444,6 +471,7 @@ function Coleccion({ searchQuery = "", preset }) {
                       setRequester((prev) => ({ ...prev, mensaje: event.target.value }))
                     }
                     placeholder="Detalles de tu propuesta"
+                    required
                   />
 
                   <div className="collection-request__actions">
@@ -501,8 +529,7 @@ function Coleccion({ searchQuery = "", preset }) {
                 src={detailImages[detalleIndex]}
                 alt={`${seleccionado.nombre} ampliada`}
                 style={{ transform: `scale(${zoomLevel})` }}
-              />
-            </div>
+              /></div>
           </div>
         </div>
       ) : null}
@@ -511,3 +538,28 @@ function Coleccion({ searchQuery = "", preset }) {
 }
 
 export default Coleccion;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

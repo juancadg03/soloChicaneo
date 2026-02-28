@@ -103,6 +103,18 @@
   background: #e9f2e0;
 }
 
+.request-card__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.request-card__content {
+  display: grid;
+  gap: 0.6rem;
+}
+
 .request-card__block h3 {
   margin: 0.1rem 0 0.25rem;
   color: #2a1a0e;
@@ -117,7 +129,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 0.7rem;
+  margin-top: 0.2rem;
 }
 
 .request-card__actions button {
@@ -126,6 +138,86 @@
   color: #3c2914;
   padding: 0.42rem 0.65rem;
   cursor: pointer;
+}
+
+.request-card__image {
+  border: 1px solid #c2a171;
+  background: #f4e6cf;
+  padding: 0.45rem;
+  min-height: 180px;
+}
+
+.request-card__thumb {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: #4a3119;
+  font-weight: 600;
+}
+
+.request-card__thumb img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #b89463;
+}
+
+.request-card__image-empty {
+  margin: 0;
+  color: #7a5a37;
+  font-size: 0.9rem;
+}
+
+.request-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(24, 18, 10, 0.7);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 30;
+}
+
+.request-modal__box {
+  background: #fef6e7;
+  border: 1px solid #b89463;
+  padding: 0.75rem;
+  max-width: min(900px, 94vw);
+  max-height: 92vh;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.request-modal__box button {
+  justify-self: end;
+  border: 1px solid #7d5328;
+  background: #d9b780;
+  color: #3c2914;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+.request-modal__box img {
+  width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+  background: #fff8ee;
+}
+
+@media (max-width: 900px) {
+  .request-card__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .request-card__image {
+    order: -1;
+  }
 }
 
 @media (max-width: 700px) {

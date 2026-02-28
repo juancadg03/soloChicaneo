@@ -332,6 +332,11 @@
   color: #5e4020;
 }
 
+.mi-input-busqueda::placeholder {
+  color: #ffffff; 
+  opacity: 0.6;    
+}
+
 @media (max-width: 1080px) {
   .collection-layout {
     grid-template-columns: 1fr;
@@ -351,3 +356,5 @@
     flex-direction: column;
   }
 }
+
+
