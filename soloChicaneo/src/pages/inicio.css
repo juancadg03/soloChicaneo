@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;700&display=swap");
 
 .home {
-  background: linear-gradient(180deg, #efe2c8 0%, #e5d4b6 100%);
+  background: linear-gradient(180deg, #debf9d 0%, #cbaa87 100%);
   border: 1px solid #c8ab77;
   font-family: "Cormorant Garamond", serif;
 }

@@ -49,7 +49,7 @@ function Coleccion({ searchQuery = "", preset }) {
   const [requester, setRequester] = useState(initialRequester);
   const [requestError, setRequestError] = useState("");
   const [requestSuccess, setRequestSuccess] = useState("");
-
+  const [foto, setFoto] = useState(null);
   useEffect(() => {
     setBusqueda(searchQuery);
   }, [searchQuery]);
@@ -165,11 +165,11 @@ function Coleccion({ searchQuery = "", preset }) {
   const zoomIn = () => setZoomLevel((prev) => Math.min(prev + 0.25, 3));
   const zoomOut = () => setZoomLevel((prev) => Math.max(prev - 0.25, 1));
 
-  const handleSubmitRequest = (event) => {
+  const handleSubmitRequest = async (event) => {
     event.preventDefault();
 
     if (!seleccionado || !seleccionado.intercambiable) {
-      setRequestError("Este articulo no esta disponible para intercambio.");
+      setRequestError("Este artículo no está disponible para intercambio.");
       return;
     }
 
@@ -182,41 +182,48 @@ function Coleccion({ searchQuery = "", preset }) {
       return;
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(correo)) {
-      setRequestError("Ingresa un correo valido.");
+    if (!foto) {
+      setRequestError("Debes adjuntar una foto de tu artículo.");
       return;
     }
 
-    addSolicitud({
-      articuloId: seleccionado._id,
-      articuloNombre: seleccionado.nombre,
-      articuloTipo: seleccionado.tipo,
-      articuloPais: seleccionado.pais,
-      articuloAnio: seleccionado.anio,
-      solicitanteNombre: nombre,
-      solicitanteCorreo: correo,
-      mensaje,
-    });
+    try {
+      const formData = new FormData();
 
-    setRequestError("");
-    setRequestSuccess("Solicitud enviada. El administrador la vera en su dashboard.");
-    setRequester(initialRequester);
-    setShowRequestForm(false);
-  };
+      formData.append("articuloId", seleccionado._id);
+      formData.append("nombre", nombre);
+      formData.append("correo", correo);
+      formData.append("mensaje", mensaje);
+      formData.append("foto", foto);
+
+      await fetch(`${API_BASE}/solicitudes`, {
+        method: "POST",
+        body: formData,
+      });
+
+      setRequestSuccess(
+        "Solicitud enviada. Espere la respuesta del administrador en su correo electrónico."
+      );
+      setRequester(initialRequester);
+      setFoto(null);
+      setShowRequestForm(false);
+    } catch {
+      setRequestError("Error enviando la solicitud.");
+    }
+  }; 
 
   return (
     <section className="collection">
       <header className="collection-top">
-        <p>Inicio / Coleccion</p>
-        <h2>Catalogo de numismatica</h2>
+        <p>Inicio / Colección</p>
+        <h2>Catálogo de numismática</h2>
       </header>
 
       <div className="collection-layout">
         <aside className="collection-filters">
           <h3>Filtrar por</h3>
 
-          <label htmlFor="search">Busqueda</label>
+          <label htmlFor="search">Búsqueda</label>
           <input
             id="search"
             type="text"
@@ -225,7 +232,7 @@ function Coleccion({ searchQuery = "", preset }) {
             onChange={(event) => setBusqueda(event.target.value)}
           />
 
-          <label htmlFor="tipo">Categoria</label>
+          <label htmlFor="tipo">Categoría</label>
           <select
             id="tipo"
             value={filtroTipo}
@@ -237,7 +244,7 @@ function Coleccion({ searchQuery = "", preset }) {
             <option value="exclusivo">Mejor Valorados</option>
           </select>
 
-          <label htmlFor="anio">Ano</label>
+          <label htmlFor="anio">Año</label>
           <select
             id="anio"
             value={filtroAnio}
@@ -251,7 +258,7 @@ function Coleccion({ searchQuery = "", preset }) {
             ))}
           </select>
 
-          <label htmlFor="pais">Pais</label>
+          <label htmlFor="pais">País</label>
           <select
             id="pais"
             value={filtroPais}
@@ -295,7 +302,7 @@ function Coleccion({ searchQuery = "", preset }) {
             </button>
           </div>
 
-          {cargando && <p className="collection-empty">Cargando articulos...</p>}
+          {cargando && <p className="collection-empty">Cargando artículos...</p>}
           {!cargando && error && <p className="collection-empty">{error}</p>}
           {!cargando && !error && !resultados.length ? (
             <p className="collection-empty">
@@ -396,7 +403,7 @@ function Coleccion({ searchQuery = "", preset }) {
 
               {showRequestForm && seleccionado.intercambiable ? (
                 <form className="collection-request" onSubmit={handleSubmitRequest}>
-                  <h4>Datos del solicitante</h4>
+                  <h4>DATOS DEL SOLICITANTE</h4>
                   <label htmlFor="solicitante-nombre">Nombre</label>
                   <input
                     id="solicitante-nombre"
@@ -419,7 +426,16 @@ function Coleccion({ searchQuery = "", preset }) {
                     placeholder="tu@correo.com"
                   />
 
-                  <label htmlFor="solicitante-mensaje">Mensaje (opcional)</label>
+                  <label htmlFor="solicitante-foto">Foto de tu artículo</label>
+                  <input
+                    id="solicitante-foto"
+                    type="file"
+                    accept="image/*"
+                    required
+                    onChange={(e) => setFoto(e.target.files[0])}
+                  />
+
+                  <label htmlFor="solicitante-mensaje">Descripción de su artículo</label>
                   <textarea
                     id="solicitante-mensaje"
                     rows="3"

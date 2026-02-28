@@ -2,21 +2,25 @@
   max-width: 480px;
   margin: 2rem auto;
   padding: 1.5rem;
-  border: 1px solid #be9a66;
-  background: #f2e6cf;
+  border: 1px solid #c3aa86;
+  background: #4f38276b;
+}
+
+.admin {
+  color: #ffffff;
 }
 
 .admin-header p {
   margin: 0;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #7f5d36;
+  color: #f8f8f8;
 }
 
 .admin-header h2 {
   margin: 0.25rem 0 1rem;
-  color: #2f1f12;
+  color: #f4ece6;
 }
 
 .admin-card {
@@ -31,23 +35,23 @@
 .admin-card input,
 .admin-card select,
 .admin-card textarea {
-  border: 1px solid #af8248;
+  border: 1px solid #fae2c4;
   padding: 0.5rem 0.6rem;
-  background: #fff9ec;
-  color: #2f1f12;
+  background: #f7ece6ac;
+  color: #80624a;
 }
 
 .admin-card button {
-  border: 1px solid #7d5328;
-  background: #d9b780;
-  color: #3c2914;
+  border: 3px solid #5235183b;
+  background: #887353;
+  color: #f8f7f6;
   padding: 0.5rem 0.75rem;
   cursor: pointer;
 }
 
 .admin-error {
   margin: 0.25rem 0;
-  color: #8d1f1f;
+  color: #802121;
   font-size: 0.9rem;
 }
 
