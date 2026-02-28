@@ -75,7 +75,7 @@ function Solicitudes() {
                   <strong>Pais:</strong> {item.articuloPais}
                 </p>
                 <p>
-                  <strong>Ano:</strong> {item.articuloAnio}
+                  <strong>Año:</strong> {item.articuloAnio}
                 </p>
               </div>
 

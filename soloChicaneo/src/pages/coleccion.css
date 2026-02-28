@@ -2,27 +2,27 @@
 
 .collection {
   margin-top: 1rem;
-  border: 1px solid #b79159;
-  background: #efdfc2;
+  border: 1px solid #7c5e30a5;
+  background: #ae88633b;
 }
 
 .collection-top {
   padding: 1rem 1.4rem;
-  border-bottom: 1px solid #b79159;
-  background: linear-gradient(180deg, #e3cda7 0%, #d7bb8f 100%);
+  border-bottom: 1px solid #654e3788;
+  background: linear-gradient(180deg, #5c361055 0%, #c0995b5b 100%);
   color: #332211;
 }
 
 .collection-top p {
   margin: 0;
-  font-size: 0.82rem;
-  color: #755026;
+  font-size: 0.9rem;
+  color: #090806;
 }
 
 .collection-top h2 {
   margin: 0.25rem 0 0;
   font-family: "Ogg", "Iowan Old Style", "Garamond", serif;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
 }
 
 .collection-layout {
@@ -34,8 +34,8 @@
 
 .collection-filters,
 .collection-detail {
-  border: 1px solid #c09a65;
-  background: #f5e7cd;
+  border: 1px solid #654e3788;
+  background: #78573388;
   padding: 1rem;
   align-self: start;
 }
@@ -48,29 +48,29 @@
 .collection-filters label {
   display: block;
   margin-top: 0.7rem;
-  font-size: 0.85rem;
-  color: #533818;
+  font-size: 0.90rem;
+  color: #ece4d9;
 }
 
 .collection-filters input,
 .collection-filters select {
   width: 100%;
   margin-top: 0.25rem;
-  border: 1px solid #b78e58;
+  border: 1px solid #4f381a;
   padding: 0.48rem;
-  background: #fcf6ea;
-  color: #322112;
+  background: #78573388;
+  color: #ece5de;
 }
 
 .collection-main {
   border: 1px solid #c09a65;
-  background: #f5e7cd;
+  background: #78573388;
   padding: 1rem;
 }
 
 .collection-tabs {
   display: inline-flex;
-  border: 1px solid #b18242;
+  border: 1px solid #61451e;
 }
 
 .collection-tabs button {
@@ -87,7 +87,7 @@
 }
 
 .collection-tabs button.is-active {
-  background: #8a5d2e;
+  background: #753f06;
   color: #f5e9d1;
 }
 
@@ -100,9 +100,9 @@
 
 .collection-card {
   text-align: left;
-  border: 1px solid #bc935e;
+  border: 1px solid #ecd8b2;
   border-radius: 0;
-  background: #f9efdc;
+  background: #ecd8b2;
   padding: 0.7rem;
   color: #3b2612;
   perspective: 900px;
@@ -110,7 +110,7 @@
 }
 
 .collection-card.is-selected {
-  box-shadow: inset 0 0 0 2px #81562a;
+  box-shadow: inset 0 0 0 2px #84684c;
 }
 
 .collection-card__flip {
@@ -133,7 +133,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid #bc935e;
+  border: 1px solid #cda46e;
   object-fit: cover;
   backface-visibility: hidden;
   filter: sepia(0.14);
@@ -163,7 +163,7 @@
 .collection-detail__arrow {
   border: none;
   height: 100%;
-  background: #d1ac75;
+  background: #fbf6ee;
   color: #4f3419;
   font-size: 1.25rem;
   cursor: pointer;
@@ -176,6 +176,10 @@
 .collection-detail__track {
   width: 100%;
   overflow: hidden;
+}
+
+.collection-detail {
+  color: #f0e6d8;
 }
 
 .collection-detail__img {
@@ -194,7 +198,7 @@
 
 .collection-detail__counter {
   margin: 0.45rem 0 0;
-  color: #7a5730;
+  color: #ffffff;
   font-size: 0.85rem;
 }
 
@@ -210,8 +214,8 @@
 
 .collection-modal__box {
   width: min(980px, 95vw);
-  border: 1px solid #c89c5c;
-  background: #f1dfbf;
+  border: 1px solid #5c3f15;
+  background: #e2d5be;
 }
 
 .collection-modal__tools {
@@ -219,12 +223,12 @@
   justify-content: flex-end;
   gap: 0.4rem;
   padding: 0.55rem;
-  border-bottom: 1px solid #c89c5c;
+  border-bottom: 1px solid #3e270496;
 }
 
 .collection-modal__tools button {
-  border: 1px solid #7a5227;
-  background: #e6c58f;
+  border: 1px solid #653d13;
+  background: #e6c58f79;
   color: #422a11;
   cursor: pointer;
   min-width: 35px;
@@ -244,7 +248,8 @@
 
 .collection-detail__year {
   margin-bottom: 0;
-  color: #684725;
+  color: #ffffff;
+  font-size: 1rem;
 }
 
 .collection-detail h3 {
@@ -255,8 +260,8 @@
 .collection-detail button {
   margin-top: 0.8rem;
   border: 1px solid #5c3a18;
-  background: linear-gradient(180deg, #6d4d29, #4f3419);
-  color: #f6e6c7;
+  background: linear-gradient(180deg, #6d4d29, #442c14);
+  color: #f5eee1;
 }
 
 .collection-detail button:disabled {
@@ -266,9 +271,9 @@
 
 .collection-request {
   margin-top: 0.9rem;
-  border: 1px solid #be9358;
+  border: 1px solid #614116;
   padding: 0.75rem;
-  background: #f9f0df;
+  background: #c7b38e52;
 }
 
 .collection-request h4 {

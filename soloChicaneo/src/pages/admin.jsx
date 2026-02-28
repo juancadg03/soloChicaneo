@@ -17,7 +17,7 @@ function Admin() {
     const pass = credentials.pass.trim();
 
     if (user !== ADMIN_USER || pass !== ADMIN_PASS) {
-      setError("Usuario o contrasena incorrectos.");
+      setError("Usuario o contraseña incorrectos.");
       return;
     }
 
@@ -34,7 +34,7 @@ function Admin() {
 
       {!isLoggedIn ? (
         <form className="admin-card" onSubmit={handleLogin}>
-          <h3>Inicio de sesion</h3>
+          <h3>Inicio de sesión</h3>
 
           <label htmlFor="admin-user">Usuario</label>
           <input
