@@ -27,7 +27,7 @@
 
 .collection-layout {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr) 320px;
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: 1rem;
   padding: 1rem;
 }
@@ -123,8 +123,7 @@
   transition: transform 0.7s ease;
 }
 
-.collection-card:hover .collection-card__flip,
-.collection-card.is-selected .collection-card__flip {
+.collection-card:hover .collection-card__flip {
   transform: rotateY(180deg) scale(1.04);
 }
 
@@ -356,5 +355,4 @@
     flex-direction: column;
   }
 }
-
 

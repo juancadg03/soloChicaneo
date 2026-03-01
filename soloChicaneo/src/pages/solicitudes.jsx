@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./solicitudes.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
@@ -16,22 +17,44 @@ const formatDate = (iso) => {
 };
 
 function Solicitudes() {
+  const navigate = useNavigate();
   const [solicitudes, setSolicitudes] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
   const [imagenActiva, setImagenActiva] = useState(null);
+  const [articulosMap, setArticulosMap] = useState({});
 
   useEffect(() => {
-    const cargarSolicitudes = async () => {
+    // Verificar si hay sesión activa
+    const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
+    if (isAdminLoggedIn !== "true") {
+      navigate("/admin");
+      return;
+    }
+
+    const cargarDatos = async () => {
       setCargando(true);
       setError("");
       try {
-        const response = await fetch(`${API_BASE}/solicitudes`);
-        if (!response.ok) {
+        const [solicitudesRes, articulosRes] = await Promise.all([
+          fetch(`${API_BASE}/solicitudes`),
+          fetch(`${API_BASE}/articulos`),
+        ]);
+
+        if (!solicitudesRes.ok || !articulosRes.ok) {
           throw new Error("No se pudo cargar");
         }
-        const data = await response.json();
-        setSolicitudes(data);
+
+        const solicitudesData = await solicitudesRes.json();
+        const articulosData = await articulosRes.json();
+
+        // Crear un mapa de artículos por ID para acceso rápido
+        const mapa = {};
+        articulosData.forEach((art) => {
+          mapa[art._id] = art;
+        });
+        setArticulosMap(mapa);
+        setSolicitudes(solicitudesData);
       } catch {
         setError("No se pudo conectar con la base de datos.");
         setSolicitudes([]);
@@ -40,8 +63,8 @@ function Solicitudes() {
       }
     };
 
-    cargarSolicitudes();
-  }, []);
+    cargarDatos();
+  }, [navigate]);
 
   const pendientes = useMemo(
     () => solicitudes.filter((item) => item.estado === "pendiente").length,
@@ -82,8 +105,19 @@ function Solicitudes() {
   return (
     <section className="requests">
       <header className="requests-head">
-        <p>Panel / Intercambios</p>
-        <h2>Dashboard de solicitudes</h2>
+        <div className="requests-head__content">
+          <div>
+            <p>Panel / Intercambios</p>
+            <h2>Dashboard de solicitudes</h2>
+          </div>
+          <button
+            type="button"
+            className="requests-head__btn-volver"
+            onClick={() => navigate("/admin")}
+          >
+            ← Volver al panel
+          </button>
+        </div>
       </header>
 
       <div className="requests-stats">
@@ -116,9 +150,29 @@ function Solicitudes() {
               </header>
 
               <div className="request-card__layout">
-                <div className="request-card__content">
+                <div className="request-card__article">
+                  <h3>Artículo</h3>
+
+                  <aside className="request-card__article-image" aria-label="Foto del artículo">
+                    {(() => {
+                      const imagenUrl = articulosMap[item.articuloId]?.imagenFrenteUrl;
+                      return imagenUrl ? (
+                        <button
+                          type="button"
+                          className="request-card__thumb"
+                          onClick={() => setImagenActiva(imagenUrl)}
+                        >
+                          <img src={imagenUrl} alt={`Foto artículo ${item.articuloNombre}`} />
+                          <span>Expandir imagen</span>
+                        </button>
+                      ) : (
+                        <p className="request-card__image-empty">Sin imagen</p>
+                      );
+                    })()}
+                  </aside>
+
                   <div className="request-card__block">
-                    <h3>{item.articuloNombre}</h3>
+                    <h4>{item.articuloNombre}</h4>
                     <p>
                       <strong>Tipo:</strong> {item.articuloTipo}
                     </p>
@@ -129,46 +183,65 @@ function Solicitudes() {
                       <strong>Año:</strong> {item.articuloAnio}
                     </p>
                   </div>
-
-                  <div className="request-card__block">
-                    <p>
-                      <strong>Solicitante:</strong> {item.solicitanteNombre}
-                    </p>
-                    <p>
-                      <strong>Correo:</strong> {item.solicitanteCorreo}
-                    </p>
-                    <p>
-                      <strong>Telefono:</strong> {item.solicitanteTelefono}
-                    </p>
-                    <p>
-                      <strong>Mensaje:</strong> {item.mensaje || "Sin mensaje"}
-                    </p>
-                  </div>
-
-                  <div className="request-card__actions">
-                    <button type="button" onClick={() => marcarRevisada(item._id)}>
-                      Marcar revisada
-                    </button>
-                    <button type="button" onClick={() => eliminarSolicitud(item._id)}>
-                      Eliminar
-                    </button>
-                  </div>
                 </div>
 
-                <aside className="request-card__image" aria-label="Foto de la solicitud">
-                  {item.imagenUrl ? (
-                    <button
-                      type="button"
-                      className="request-card__thumb"
-                      onClick={() => setImagenActiva(item.imagenUrl)}
-                    >
-                      <img src={item.imagenUrl} alt={`Foto solicitud ${item.solicitanteNombre}`} />
-                      <span>Expandir imagen</span>
-                    </button>
-                  ) : (
-                    <p className="request-card__image-empty">Sin imagen</p>
-                  )}
-                </aside>
+                <div className="request-card__right">
+                  <h3>Solicitante</h3>
+
+                  <aside className="request-card__image" aria-label="Foto de la solicitud">
+                    {item.imagenUrl ? (
+                      <button
+                        type="button"
+                        className="request-card__thumb"
+                        onClick={() => setImagenActiva(item.imagenUrl)}
+                      >
+                        <img src={item.imagenUrl} alt={`Foto solicitud ${item.solicitanteNombre}`} />
+                        <span>Expandir imagen</span>
+                      </button>
+                    ) : (
+                      <p className="request-card__image-empty">Sin imagen</p>
+                    )}
+                  </aside>
+
+                  <div className="request-card__solicitud">
+                    <div className="request-card__block">
+                      <p>
+                        <strong>Nombre:</strong> {item.solicitanteNombre}
+                      </p>
+                      <p>
+                        <strong>Correo:</strong> {item.solicitanteCorreo}
+                      </p>
+                      <p>
+                        <strong>Teléfono:</strong> {item.solicitanteTelefono}
+                      </p>
+                      <p>
+                        <strong>Mensaje:</strong> {item.mensaje || "Sin mensaje"}
+                      </p>
+                    </div>
+                    <div className="request-card__actions">
+                      <button type="button" onClick={() => marcarRevisada(item._id)}>
+                        Marcar revisada
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const subject = encodeURIComponent("Respuesta a solicitud de intercambio");
+                          const to = encodeURIComponent(item.solicitanteCorreo);
+                          window.open(
+                            `https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${to}&su=${subject}`,
+                            "_blank"
+                          );
+                        }}
+                        className="request-card__link-button"
+                      >
+                        Responder vía correo
+                      </button>
+                      <button type="button" onClick={() => eliminarSolicitud(item._id)}>
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </article>
           ))}

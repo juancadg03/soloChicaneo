@@ -2,8 +2,10 @@ import { useMemo, useState } from "react";
 import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
 import Coleccion from "./pages/coleccion";
+import DetalleArticulo from "./pages/detalle-articulo";
 import Admin from "./pages/admin";
 import Solicitudes from "./pages/solicitudes";
+import GestionArticulos from "./pages/gestion-articulos";
 import "./App.css";
 
 function App() {
@@ -73,6 +75,7 @@ function App() {
             path="/coleccion"
             element={<Coleccion searchQuery={searchValue} preset={collectionPreset} />}
           />
+          <Route path="/articulo/:id" element={<DetalleArticulo />} />
           <Route
             path="/sobremi"
             element={
@@ -84,15 +87,7 @@ function App() {
           />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/intercambios" element={<Solicitudes />} />
-          <Route
-            path="/admin/articulos"
-            element={
-              <section className="about">
-                <h2>Gestion de articulos</h2>
-                <p>Esta pagina se implementara en una siguiente fase.</p>
-              </section>
-            }
-          />
+          <Route path="/admin/articulos" element={<GestionArticulos />} />
         </Routes>
       </div>
     </div>

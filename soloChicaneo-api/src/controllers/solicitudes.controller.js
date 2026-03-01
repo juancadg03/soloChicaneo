@@ -1,5 +1,6 @@
 const { Readable } = require("stream");
 const Solicitud = require("../models/Solicitud");
+const Articulo = require("../models/Articulo");
 const cloudinary = require("../config/cloudinary");
 
 const uploadToCloudinary = (fileBuffer) => {
@@ -52,12 +53,15 @@ const createSolicitud = async (req, res) => {
     return res.status(400).json({ message: "Faltan datos obligatorios" });
   }
 
+  const articulo = await Articulo.findById(articuloId);
+
   const nuevaSolicitudData = {
     articuloId,
     articuloNombre,
     articuloTipo,
     articuloPais,
     articuloAnio: Number(articuloAnio),
+    articuloImagenLocal: articulo?.imagenLocal || "",
     solicitanteNombre,
     solicitanteCorreo,
     solicitanteTelefono,
