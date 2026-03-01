@@ -50,6 +50,7 @@ function Coleccion({ searchQuery = "", preset }) {
   const [requestError, setRequestError] = useState("");
   const [requestSuccess, setRequestSuccess] = useState("");
   const [foto, setFoto] = useState(null);
+  const [likes, setLikes] = useState({});
   useEffect(() => {
     setBusqueda(searchQuery);
   }, [searchQuery]);
@@ -224,7 +225,30 @@ function Coleccion({ searchQuery = "", preset }) {
     } catch {
       setRequestError("No se pudo enviar la solicitud. Intenta nuevamente.");
     }
-  }; 
+  };
+
+  const handleLike = async (articuloId, event) => {
+    event.stopPropagation();
+
+    const currentLikes = likes[articuloId] ?? 0;
+    const optimisticLikes = currentLikes + 1;
+    setLikes((prev) => ({ ...prev, [articuloId]: optimisticLikes }));
+
+    try {
+      const response = await fetch(`${API_BASE}/articulos/${articuloId}/like`, {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error("No se pudo registrar el like");
+      }
+
+      const data = await response.json();
+      setLikes((prev) => ({ ...prev, [articuloId]: data.likes }));
+    } catch {
+      setLikes((prev) => ({ ...prev, [articuloId]: currentLikes }));
+    }
+  };
 
   return (
     <section className="collection">
@@ -352,6 +376,19 @@ function Coleccion({ searchQuery = "", preset }) {
                   <small>
                     {item.pais} - {item.anio}
                   </small>
+                  <div className="collection-card__like">
+                    <button
+                      type="button"
+                      className="collection-card__like-btn"
+                      onClick={(event) => handleLike(item._id, event)}
+                      title="Me gusta este articulo"
+                    >
+                      ♥
+                    </button>
+                    <span className="collection-card__like-count">
+                      {likes[item._id] ?? item.likes ?? 0}
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -398,6 +435,20 @@ function Coleccion({ searchQuery = "", preset }) {
                 <strong>Intercambiable:</strong> {seleccionado.intercambiable ? "Si" : "No"}
               </p>
               <p>{seleccionado.descripcion}</p>
+
+              <div className="collection-detail__likes">
+                <button
+                  type="button"
+                  className="collection-detail__like-btn"
+                  onClick={(event) => handleLike(seleccionado._id, event)}
+                  title="Me gusta este articulo"
+                >
+                  ♥ Me gusta
+                </button>
+                <span className="collection-detail__like-count">
+                  {likes[seleccionado._id] ?? seleccionado.likes ?? 0} personas lo aman
+                </span>
+              </div>
 
               {requestSuccess ? <p className="collection-request__success">{requestSuccess}</p> : null}
               {requestError ? <p className="collection-request__error">{requestError}</p> : null}

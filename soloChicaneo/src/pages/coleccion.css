@@ -337,6 +337,65 @@
   opacity: 0.6;    
 }
 
+/* Like Button Styles */
+.collection-card__like {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.collection-card__like-btn {
+  border: none;
+  background: none;
+  color: #c7a878;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.collection-card__like-btn:hover {
+  color: #e8392b;
+  transform: scale(1.2);
+}
+
+.collection-card__like-count {
+  font-size: 0.75rem;
+  color: #8b6f47;
+}
+
+.collection-detail__likes {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #654e3788;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.collection-detail__like-btn {
+  border: 1px solid #c7a878;
+  background: #ae88633b;
+  color: #e8d5b7;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
+.collection-detail__like-btn:hover {
+  background: #d4905c;
+  color: #fff;
+  border-color: #e8392b;
+}
+
+.collection-detail__like-count {
+  font-size: 0.9rem;
+  color: #b89968;
+}
+
 @media (max-width: 1080px) {
   .collection-layout {
     grid-template-columns: 1fr;

@@ -132,10 +132,24 @@ const deleteArticulo = async (req, res) => {
   res.json({ message: "Articulo eliminado" });
 };
 
+const likeArticulo = async (req, res) => {
+  const articulo = await Articulo.findById(req.params.id);
+
+  if (!articulo) {
+    return res.status(404).json({ message: "Articulo no encontrado" });
+  }
+
+  articulo.likes = (articulo.likes || 0) + 1;
+  await articulo.save();
+
+  res.json({ likes: articulo.likes });
+};
+
 module.exports = {
   getArticulos,
   getArticuloById,
   createArticulo,
   updateArticulo,
   deleteArticulo,
+  likeArticulo,
 };

@@ -6,6 +6,7 @@ const {
   createArticulo,
   updateArticulo,
   deleteArticulo,
+  likeArticulo,
 } = require("../controllers/articulos.controller");
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.get("/", getArticulos);
 router.get("/:id", getArticuloById);
 router.post("/", upload.single("imagen"), createArticulo);
 router.put("/:id", upload.single("imagen"), updateArticulo);
+router.post("/:id/like", likeArticulo);
 router.delete("/:id", deleteArticulo);
 
 module.exports = router;

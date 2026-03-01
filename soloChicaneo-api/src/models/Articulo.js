@@ -16,6 +16,7 @@ const articuloSchema = new mongoose.Schema(
     imagenLocal: { type: String, default: "" },
     imagenUrl: { type: String, default: "" },
     imagenPublicId: { type: String, default: "" },
+    likes: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
