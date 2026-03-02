@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
 
 const ADMIN_USER = "admin";
-const ADMIN_PASS = "1234";
+const ADMIN_PASS = "holamundo";
 
 function Admin() {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ user: "", pass: "" });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Verificar si hay sesión activa en localStorage
+    const isAdminLoggedIn = localStorage.getItem("adminLoggedIn");
+    if (isAdminLoggedIn === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -23,6 +31,12 @@ function Admin() {
 
     setError("");
     setIsLoggedIn(true);
+    localStorage.setItem("adminLoggedIn", "true");
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("adminLoggedIn");
   };
 
   return (
@@ -70,7 +84,7 @@ function Admin() {
           <button type="button" onClick={() => navigate("/admin/intercambios")}>
             Ver solicitudes de intercambio
           </button>
-          <button type="button" onClick={() => setIsLoggedIn(false)}>
+          <button type="button" onClick={handleLogout}>
             Cerrar sesión
           </button>
         </section>

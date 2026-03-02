@@ -74,10 +74,18 @@ const createArticulo = async (req, res) => {
     imagenLocal,
   };
 
-  if (req.file) {
-    const uploadResult = await uploadToCloudinary(req.file.buffer);
-    nuevoArticuloData.imagenUrl = uploadResult.secure_url;
-    nuevoArticuloData.imagenPublicId = uploadResult.public_id;
+  // Manejar imagen del frente
+  if (req.files?.imagenFrente) {
+    const uploadResult = await uploadToCloudinary(req.files.imagenFrente[0].buffer);
+    nuevoArticuloData.imagenFrenteUrl = uploadResult.secure_url;
+    nuevoArticuloData.imagenFrentePublicId = uploadResult.public_id;
+  }
+
+  // Manejar imagen de atrás
+  if (req.files?.imagenAtras) {
+    const uploadResult = await uploadToCloudinary(req.files.imagenAtras[0].buffer);
+    nuevoArticuloData.imagenAtrasUrl = uploadResult.secure_url;
+    nuevoArticuloData.imagenAtrasPublicId = uploadResult.public_id;
   }
 
   const nuevoArticulo = await Articulo.create(nuevoArticuloData);
@@ -94,13 +102,24 @@ const updateArticulo = async (req, res) => {
     return res.status(404).json({ message: "Articulo no encontrado" });
   }
 
-  if (req.file) {
-    if (articulo.imagenPublicId) {
-      await cloudinary.uploader.destroy(articulo.imagenPublicId);
+  // Manejar imagen del frente
+  if (req.files?.imagenFrente) {
+    if (articulo.imagenFrentePublicId) {
+      await cloudinary.uploader.destroy(articulo.imagenFrentePublicId);
     }
-    const uploadResult = await uploadToCloudinary(req.file.buffer);
-    articulo.imagenUrl = uploadResult.secure_url;
-    articulo.imagenPublicId = uploadResult.public_id;
+    const uploadResult = await uploadToCloudinary(req.files.imagenFrente[0].buffer);
+    articulo.imagenFrenteUrl = uploadResult.secure_url;
+    articulo.imagenFrentePublicId = uploadResult.public_id;
+  }
+
+  // Manejar imagen de atrás
+  if (req.files?.imagenAtras) {
+    if (articulo.imagenAtrasPublicId) {
+      await cloudinary.uploader.destroy(articulo.imagenAtrasPublicId);
+    }
+    const uploadResult = await uploadToCloudinary(req.files.imagenAtras[0].buffer);
+    articulo.imagenAtrasUrl = uploadResult.secure_url;
+    articulo.imagenAtrasPublicId = uploadResult.public_id;
   }
 
   if (nombre !== undefined) articulo.nombre = nombre;
@@ -124,9 +143,21 @@ const deleteArticulo = async (req, res) => {
     return res.status(404).json({ message: "Articulo no encontrado" });
   }
 
+  // Eliminar imagen del frente
+  if (articulo.imagenFrentePublicId) {
+    await cloudinary.uploader.destroy(articulo.imagenFrentePublicId);
+  }
+
+  // Eliminar imagen de atrás
+  if (articulo.imagenAtrasPublicId) {
+    await cloudinary.uploader.destroy(articulo.imagenAtrasPublicId);
+  }
+
+  // Compatibilidad con anterior
   if (articulo.imagenPublicId) {
     await cloudinary.uploader.destroy(articulo.imagenPublicId);
   }
+
   await articulo.deleteOne();
 
   res.json({ message: "Articulo eliminado" });

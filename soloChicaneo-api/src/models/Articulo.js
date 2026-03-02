@@ -14,6 +14,11 @@ const articuloSchema = new mongoose.Schema(
     intercambiable: { type: Boolean, default: false },
     descripcion: { type: String, required: true, trim: true },
     imagenLocal: { type: String, default: "" },
+    imagenFrenteUrl: { type: String, default: "" },
+    imagenFrentePublicId: { type: String, default: "" },
+    imagenAtrasUrl: { type: String, default: "" },
+    imagenAtrasPublicId: { type: String, default: "" },
+    // Compatibilidad con campo antiguo
     imagenUrl: { type: String, default: "" },
     imagenPublicId: { type: String, default: "" },
   },

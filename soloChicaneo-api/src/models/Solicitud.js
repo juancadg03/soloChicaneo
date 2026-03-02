@@ -7,6 +7,7 @@ const solicitudSchema = new mongoose.Schema(
     articuloTipo: { type: String, required: true, trim: true },
     articuloPais: { type: String, required: true, trim: true },
     articuloAnio: { type: Number, required: true },
+    articuloImagenLocal: { type: String, default: "" },
     solicitanteNombre: { type: String, required: true, trim: true },
     solicitanteCorreo: { type: String, required: true, trim: true },
     solicitanteTelefono: { type: String, required: true, trim: true },
