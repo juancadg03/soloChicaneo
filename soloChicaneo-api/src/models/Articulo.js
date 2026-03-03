@@ -21,6 +21,9 @@ const articuloSchema = new mongoose.Schema(
     // Compatibilidad con campo antiguo
     imagenUrl: { type: String, default: "" },
     imagenPublicId: { type: String, default: "" },
+    // Like feature
+    likes: { type: Number, default: 0 },
+    likedByVisitors: { type: [String], default: [] },
   },
   { timestamps: true }
 );

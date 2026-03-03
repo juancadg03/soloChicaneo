@@ -231,6 +231,9 @@ function Coleccion({ searchQuery = "", preset }) {
                   <small>
                     {item.pais} - {item.anio}
                   </small>
+                  <span className="collection-card__likes">
+                    ♥ {item.likes || 0}
+                  </span>
                 </button>
               ))}
             </div>

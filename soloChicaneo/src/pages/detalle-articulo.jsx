@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getOrCreateVisitorId } from "../utils/visitorId";
 import "./detalle-articulo.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
@@ -32,6 +33,9 @@ function DetalleArticulo() {
   const [requestError, setRequestError] = useState("");
   const [requestSuccess, setRequestSuccess] = useState("");
   const [foto, setFoto] = useState(null);
+  const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
 
   useEffect(() => {
     const cargarArticulo = async () => {
@@ -42,6 +46,12 @@ function DetalleArticulo() {
         }
         const data = await response.json();
         setArticulo(data);
+        setLikes(data.likes || 0);
+        
+        // Check if current visitor has already liked this article
+        const visitorId = getOrCreateVisitorId();
+        const hasLiked = (data.likedByVisitors || []).includes(visitorId);
+        setIsLiked(hasLiked);
       } catch {
         setError("No se pudo cargar el artículo.");
       } finally {
@@ -124,6 +134,35 @@ function DetalleArticulo() {
       setShowRequestForm(false);
     } catch {
       setRequestError("No se pudo enviar la solicitud. Intenta nuevamente.");
+    }
+  };
+
+  const handleToggleLike = async () => {
+    if (!articulo) return;
+    
+    setLikeLoading(true);
+    try {
+      const visitorId = getOrCreateVisitorId();
+      const response = await fetch(`${API_BASE}/articulos/${articulo._id}/like`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ visitorId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("No se pudo procesar el like");
+      }
+
+      const data = await response.json();
+      setLikes(data.likes);
+      setIsLiked(data.isLiked);
+    } catch {
+      // Handle error silently or show a toast notification
+      console.error("Error al procesar like");
+    } finally {
+      setLikeLoading(false);
     }
   };
 
@@ -213,18 +252,31 @@ function DetalleArticulo() {
           {requestSuccess ? <p className="detalle-articulo__success">{requestSuccess}</p> : null}
           {requestError ? <p className="detalle-articulo__error">{requestError}</p> : null}
 
-          <button
-            type="button"
-            disabled={!articulo.intercambiable}
-            className="detalle-articulo__request-btn"
-            onClick={() => {
-              setShowRequestForm(true);
-              setRequestError("");
-              setRequestSuccess("");
-            }}
-          >
-            Solicitar intercambio
-          </button>
+          <div className="detalle-articulo__actions">
+            <button
+              type="button"
+              disabled={likeLoading}
+              className={`detalle-articulo__like-btn ${isLiked ? "is-liked" : ""}`}
+              onClick={handleToggleLike}
+              title={isLiked ? "Quitar like" : "Agregar like"}
+            >
+              <span className="detalle-articulo__like-icon">♥</span>
+              <span className="detalle-articulo__like-count">{likes}</span>
+            </button>
+
+            <button
+              type="button"
+              disabled={!articulo.intercambiable}
+              className="detalle-articulo__request-btn"
+              onClick={() => {
+                setShowRequestForm(true);
+                setRequestError("");
+                setRequestSuccess("");
+              }}
+            >
+              Solicitar intercambio
+            </button>
+          </div>
         </div>
         </div>
 

@@ -336,6 +336,19 @@
   opacity: 0.6;    
 }
 
+.collection-card__likes {
+  display: inline-block;
+  margin-top: 0.3rem;
+  padding: 0.2rem 0.4rem;
+  background: rgba(220, 100, 100, 0.3);
+  border-radius: 3px;
+  color: #8b4513;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-align: center;
+  min-width: fit-content;
+}
+
 @media (max-width: 1080px) {
   .collection-layout {
     grid-template-columns: 1fr;

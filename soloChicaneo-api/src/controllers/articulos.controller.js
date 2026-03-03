@@ -163,10 +163,50 @@ const deleteArticulo = async (req, res) => {
   res.json({ message: "Articulo eliminado" });
 };
 
+const toggleLike = async (req, res) => {
+  try {
+    const { visitorId } = req.body;
+    
+    if (!visitorId || typeof visitorId !== "string" || !visitorId.trim()) {
+      return res.status(400).json({ message: "visitorId requerido" });
+    }
+
+    const articulo = await Articulo.findById(req.params.id);
+
+    if (!articulo) {
+      return res.status(404).json({ message: "Articulo no encontrado" });
+    }
+
+    const visitorIdTrimmed = visitorId.trim();
+    const hasLiked = articulo.likedByVisitors.includes(visitorIdTrimmed);
+
+    if (hasLiked) {
+      // Quitar like
+      articulo.likedByVisitors = articulo.likedByVisitors.filter(
+        (id) => id !== visitorIdTrimmed
+      );
+      articulo.likes = Math.max(0, articulo.likes - 1);
+    } else {
+      // Agregar like
+      articulo.likedByVisitors.push(visitorIdTrimmed);
+      articulo.likes += 1;
+    }
+
+    await articulo.save();
+    res.json({
+      likes: articulo.likes,
+      isLiked: !hasLiked,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al procesar like", error: error.message });
+  }
+};
+
 module.exports = {
   getArticulos,
   getArticuloById,
   createArticulo,
   updateArticulo,
   deleteArticulo,
+  toggleLike,
 };
