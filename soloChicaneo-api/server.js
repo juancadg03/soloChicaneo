@@ -7,6 +7,7 @@ dotenv.config();
 const connectDB = require("./src/config/db");
 const articulosRoutes = require("./src/routes/articulos.routes");
 const solicitudesRoutes = require("./src/routes/solicitudes.routes");
+const estadisticasRoutes = require("./src/routes/estadisticas.routes");
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -22,6 +23,7 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/articulos", articulosRoutes);
 app.use("/api/solicitudes", solicitudesRoutes);
+app.use("/api/estadisticas", estadisticasRoutes);
 
 app.use((error, _req, res, _next) => {
   console.error(error);

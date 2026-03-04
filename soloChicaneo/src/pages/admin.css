@@ -61,6 +61,68 @@
   margin-top: 0.4rem;
 }
 
+.admin-stats {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-stat-item {
+  border: 1px solid #6d5d4f;
+  background: #6d6356;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.admin-stat-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: #e8dcc4;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-stat-value {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #f4d9a6;
+  font-weight: bold;
+}
+
+.admin-top-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style-position: inside;
+}
+
+.admin-top-item {
+  padding: 0.6rem 0;
+  color: #e8dcc4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #5a4d45;
+}
+
+.admin-top-item:last-child {
+  border-bottom: none;
+}
+
+.admin-top-name {
+  flex: 1;
+  padding-right: 0.5rem;
+}
+
+.admin-top-likes {
+  background: rgba(220, 100, 100, 0.3);
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+  color: #ff9999;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
 @media (max-width: 600px) {
   .admin {
     margin: 1rem auto;
@@ -69,5 +131,9 @@
 
   .admin-actions {
     flex-direction: column;
+  }
+
+  .admin-stat-value {
+    font-size: 2rem;
   }
 }

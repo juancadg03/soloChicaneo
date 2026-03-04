@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Inicio from "./pages/Inicio";
 import Coleccion from "./pages/coleccion";
@@ -8,10 +8,28 @@ import Solicitudes from "./pages/solicitudes";
 import GestionArticulos from "./pages/gestion-articulos";
 import "./App.css";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+
 function App() {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+
+  // Register site visit on app load
+  useEffect(() => {
+    const registrarVisita = async () => {
+      try {
+        await fetch(`${API_BASE}/estadisticas/visita`, {
+          method: "POST",
+        });
+      } catch (error) {
+        // Silently fail if visit registration fails
+        console.error("Error registering visit:", error);
+      }
+    };
+
+    registrarVisita();
+  }, []);
 
   const collectionPreset = useMemo(() => {
     const preset = location.state?.collectionPreset;
