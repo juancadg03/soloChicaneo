@@ -208,34 +208,42 @@ function Coleccion({ searchQuery = "", preset }) {
 
           {!cargando && !error && resultados.length ? (
             <div className="collection-grid">
-              {resultados.map((item) => (
-                <button
-                  key={item._id}
-                  type="button"
-                  className="collection-card"
-                  onClick={() => navigate(`/articulo/${item._id}`)}
-                >
-                  <span className="collection-card__flip">
-                    <img
-                      className="collection-card__img collection-card__img--front"
-                      src={resolveFaces(item).front}
-                      alt={`${item.nombre} frontal`}
-                    />
-                    <img
-                      className="collection-card__img collection-card__img--back"
-                      src={resolveFaces(item).back}
-                      alt={`${item.nombre} trasera`}
-                    />
-                  </span>
-                  <strong>{item.nombre}</strong>
-                  <small>
-                    {item.pais} - {item.anio}
-                  </small>
-                  <span className="collection-card__likes">
-                    ♥ {item.likes || 0}
-                  </span>
-                </button>
-              ))}
+              {(() => {
+                const maxLikes = Math.max(...resultados.map(item => item.likes || 0));
+                return resultados.map((item) => (
+                  <button
+                    key={item._id}
+                    type="button"
+                    className="collection-card"
+                    onClick={() => navigate(`/articulo/${item._id}`)}
+                  >
+                    <span className="collection-card__flip">
+                      <img
+                        className="collection-card__img collection-card__img--front"
+                        src={resolveFaces(item).front}
+                        alt={`${item.nombre} frontal`}
+                      />
+                      <img
+                        className="collection-card__img collection-card__img--back"
+                        src={resolveFaces(item).back}
+                        alt={`${item.nombre} trasera`}
+                      />
+                    </span>
+                    <strong>{item.nombre}</strong>
+                    <small>
+                      {item.pais} - {item.anio}
+                    </small>
+                    <div className="collection-card__likes-container">
+                      <span className="collection-card__likes">
+                        ♥ {item.likes || 0}
+                      </span>
+                      {item.likes === maxLikes && item.likes > 0 && (
+                        <span className="collection-card__badge">Artículo de la semana</span>
+                      )}
+                    </div>
+                  </button>
+                ));
+              })()}
             </div>
           ) : null}
         </main>
